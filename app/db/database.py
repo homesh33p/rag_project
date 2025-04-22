@@ -5,8 +5,9 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+psycopg2://postgres:postgres@localhost:5432/rag_db")
+pguser = os.getenv("RAG_USER")
+pgpass = os.getenv("RAG_PASSWORD")
+DATABASE_URL = os.getenv("DATABASE_URL", f"postgresql+psycopg2://{pguser}:{pgpass}@localhost:5432/rag")
 # Convert to async URL if needed
 if DATABASE_URL.startswith("postgresql+psycopg2"):
     DATABASE_URL = DATABASE_URL.replace("postgresql+psycopg2", "postgresql+asyncpg")
