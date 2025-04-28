@@ -1,3 +1,5 @@
 .python-version
 .env
 *.pyc
+CLAUDE.md
+rag_documentation.md
