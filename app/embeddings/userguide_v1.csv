@@ -1,0 +1,1451 @@
+"headingTrace","pageTrace","page_id","section_id","content","enhancedContent"
+"RAG System User Guide","RAG System User Guide<_dot_>RAG System User Guide","rag-system-user-guide","rag-system-user-guide","","This content is about 'RAG System User Guide' within the section 'RAG System User Guide'. "
+"Introduction","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Introduction","introduction","introduction","The RAG (Retrieval Augmented Generation) System is a powerful tool that combines document storage, vector search, and API functionality to enable semantic search capabilities for your applications. This user guide provides comprehensive information on how to use the system effectively.
+
+The RAG System offers the following key features:
+- Document storage with vector embeddings
+- Semantic search using pgvector
+- RESTful API with FastAPI
+- Efficient retrieval of contextually relevant information
+
+This guide will walk you through:
+- System setup and installation
+- API endpoints and usage
+- Query construction
+- Best practices for optimal results
+
+Before getting started, ensure you have the necessary prerequisites:
+- Python 3.8+
+- PostgreSQL with pgvector extension
+- Basic understanding of REST APIs
+
+The system is designed to be easy to use while providing powerful semantic search capabilities. By following this guide, you'll be able to quickly integrate the RAG System into your applications and leverage its full potential.","This content is about 'Introduction' within the section 'RAG System User Guide > RAG System User Guide'. The RAG (Retrieval Augmented Generation) System is a powerful tool that combines document storage, vector search, and API functionality to enable semantic search capabilities for your applications. This user guide provides comprehensive information on how to use the system effectively.
+
+The RAG System offers the following key features:
+- Document storage with vector embeddings
+- Semantic search using pgvector
+- RESTful API with FastAPI
+- Efficient retrieval of contextually relevant information
+
+This guide will walk you through:
+- System setup and installation
+- API endpoints and usage
+- Query construction
+- Best practices for optimal results
+
+Before getting started, ensure you have the necessary prerequisites:
+- Python 3.8+
+- PostgreSQL with pgvector extension
+- Basic understanding of REST APIs
+
+The system is designed to be easy to use while providing powerful semantic search capabilities. By following this guide, you'll be able to quickly integrate the RAG System into your applications and leverage its full potential."
+"Getting Started","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Getting Started","getting-started","getting-started","","This content is about 'Getting Started' within the section 'RAG System User Guide > RAG System User Guide'. "
+"Installation","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Getting Started<_dot_>Installation","installation","installation","Setting up the RAG System involves installing the necessary components and configuring the environment. Follow these steps to get started:
+
+1. Clone the repository:
+
+2. Create and activate a virtual environment:
+
+3. Install the required dependencies:
+
+4. Set up the environment variables by creating a .env file based on .env.example:
+
+5. Run the database setup script:
+
+   This script will:
+   - Install the pgvector extension
+   - Create a new database called 'rag'
+   - Create a user with appropriate permissions
+   - Enable the vector extension in the database
+
+6. Apply database migrations:
+
+7. Start the application:
+
+After completing these steps, the API will be available at http://localhost:8000.
+
+You can verify the installation by accessing the API documentation at http://localhost:8000/docs or by sending a GET request to http://localhost:8000/ which should return a welcome message.
+
+> **Note**: For production deployments, you should use a proper web server like Gunicorn behind a reverse proxy such as Nginx, with appropriate security measures.","This content is about 'Installation' within the section 'RAG System User Guide > RAG System User Guide > Getting Started'. Setting up the RAG System involves installing the necessary components and configuring the environment. Follow these steps to get started:
+
+1. Clone the repository:
+
+2. Create and activate a virtual environment:
+
+3. Install the required dependencies:
+
+4. Set up the environment variables by creating a .env file based on .env.example:
+
+5. Run the database setup script:
+
+   This script will:
+   - Install the pgvector extension
+   - Create a new database called 'rag'
+   - Create a user with appropriate permissions
+   - Enable the vector extension in the database
+
+6. Apply database migrations:
+
+7. Start the application:
+
+After completing these steps, the API will be available at http://localhost:8000.
+
+You can verify the installation by accessing the API documentation at http://localhost:8000/docs or by sending a GET request to http://localhost:8000/ which should return a welcome message.
+
+> **Note**: For production deployments, you should use a proper web server like Gunicorn behind a reverse proxy such as Nginx, with appropriate security measures."
+"API Reference","RAG System User Guide<_dot_>RAG System User Guide<_dot_>API Reference","api-reference","api-reference","","This content is about 'API Reference' within the section 'RAG System User Guide > RAG System User Guide'. "
+"API Endpoints","RAG System User Guide<_dot_>RAG System User Guide<_dot_>API Reference<_dot_>API Endpoints","api-endpoints","api-endpoints","The RAG System provides several API endpoints for interacting with the system. Here's a comprehensive list of available endpoints and their functionalities:","This content is about 'API Endpoints' within the section 'RAG System User Guide > RAG System User Guide > API Reference'. The RAG System provides several API endpoints for interacting with the system. Here's a comprehensive list of available endpoints and their functionalities:"
+"1. Root Endpoint","RAG System User Guide<_dot_>RAG System User Guide<_dot_>API Reference<_dot_>API Endpoints<_dot_>1. Root Endpoint","1-root-endpoint","1-root-endpoint","- **URL**: GET /
+- **Description**: Returns a welcome message and confirms the API is running
+- **Response**: `{""""message"""": """"Welcome to the RAG API""""}`","This content is about '1. Root Endpoint' within the section 'RAG System User Guide > RAG System User Guide > API Reference > API Endpoints'. - **URL**: GET /
+- **Description**: Returns a welcome message and confirms the API is running
+- **Response**: `{""""message"""": """"Welcome to the RAG API""""}`"
+"2. Document Management","RAG System User Guide<_dot_>RAG System User Guide<_dot_>API Reference<_dot_>API Endpoints<_dot_>2. Document Management","2-document-management","2-document-management","- **Create Document**:
+  - **URL**: POST /api/v1/documents
+  - **Description**: Creates a new document in the database
+  - **Request Body**: `{""""title"""": """"Document Title"""", """"content"""": """"Document content...""""}`
+  - **Response**: Document object with id, title, content, created_at, and updated_at fields
+
+- **List Documents**:
+  - **URL**: GET /api/v1/documents
+  - **Description**: Returns a list of documents
+  - **Query Parameters**: skip (default: 0), limit (default: 10)
+  - **Response**: Array of document objects
+
+- **Get Document**:
+  - **URL**: GET /api/v1/documents/{document_id}
+  - **Description**: Retrieves a specific document by ID
+  - **Path Parameters**: document_id (integer)
+  - **Response**: Document object
+  - **Error**: 404 if document not found","This content is about '2. Document Management' within the section 'RAG System User Guide > RAG System User Guide > API Reference > API Endpoints'. - **Create Document**:
+  - **URL**: POST /api/v1/documents
+  - **Description**: Creates a new document in the database
+  - **Request Body**: `{""""title"""": """"Document Title"""", """"content"""": """"Document content...""""}`
+  - **Response**: Document object with id, title, content, created_at, and updated_at fields
+
+- **List Documents**:
+  - **URL**: GET /api/v1/documents
+  - **Description**: Returns a list of documents
+  - **Query Parameters**: skip (default: 0), limit (default: 10)
+  - **Response**: Array of document objects
+
+- **Get Document**:
+  - **URL**: GET /api/v1/documents/{document_id}
+  - **Description**: Retrieves a specific document by ID
+  - **Path Parameters**: document_id (integer)
+  - **Response**: Document object
+  - **Error**: 404 if document not found"
+"3. Query Functionality","RAG System User Guide<_dot_>RAG System User Guide<_dot_>API Reference<_dot_>API Endpoints<_dot_>3. Query Functionality","3-query-functionality","3-query-functionality","- **Search Documents**:
+  - **URL**: POST /api/v1/query
+  - **Description**: Performs semantic search on documents
+  - **Request Body**: `{""""query"""": """"Your search query"""", """"top_k"""": 3}`
+  - **Response**: Array of document objects with similarity scores
+  - **Note**: The top_k parameter controls the number of results returned (default: 3, max: 10)
+
+All API responses are in JSON format. For detailed schema information, refer to the OpenAPI documentation available at /docs when the server is running.
+
+Examples of using the API with curl:
+
+1. Create a document:
+
+2. Query documents:","This content is about '3. Query Functionality' within the section 'RAG System User Guide > RAG System User Guide > API Reference > API Endpoints'. - **Search Documents**:
+  - **URL**: POST /api/v1/query
+  - **Description**: Performs semantic search on documents
+  - **Request Body**: `{""""query"""": """"Your search query"""", """"top_k"""": 3}`
+  - **Response**: Array of document objects with similarity scores
+  - **Note**: The top_k parameter controls the number of results returned (default: 3, max: 10)
+
+All API responses are in JSON format. For detailed schema information, refer to the OpenAPI documentation available at /docs when the server is running.
+
+Examples of using the API with curl:
+
+1. Create a document:
+
+2. Query documents:"
+"Core Functionality","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Core Functionality","core-functionality","core-functionality","","This content is about 'Core Functionality' within the section 'RAG System User Guide > RAG System User Guide'. "
+"Document Storage","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Core Functionality<_dot_>Document Storage","document-storage","document-storage","The Document Storage functionality allows you to store text documents in the system for later retrieval. When a document is stored, it is automatically converted into a vector embedding that captures its semantic meaning, enabling similarity-based search.","This content is about 'Document Storage' within the section 'RAG System User Guide > RAG System User Guide > Core Functionality'. The Document Storage functionality allows you to store text documents in the system for later retrieval. When a document is stored, it is automatically converted into a vector embedding that captures its semantic meaning, enabling similarity-based search."
+"Key aspects of document storage:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Core Functionality<_dot_>Document Storage<_dot_>Key aspects of document storage:","key-aspects-of-document-storage","key-aspects-of-document-storage","1. **Document Structure**
+
+   Each document consists of:
+   - **Title**: A descriptive name for the document (required)
+   - **Content**: The main text body of the document (required)
+   - **Embedding**: Vector representation of the content (automatically generated)
+   - **Created/Updated timestamps**: Automatically managed by the system
+
+2. **Adding Documents**
+
+   To add a document to the system:
+
+   a. Using the API directly:
+
+   b. Using Python with requests:
+
+3. **Document Size Considerations**
+   - The system is optimized for text documents ranging from a few sentences to several paragraphs
+   - Very large documents (>100KB) may be automatically split into smaller chunks
+   - For optimal search results, consider splitting very large documents into logical sections
+
+4. **Embedding Generation**
+
+   When a document is stored, the system:
+   - Preprocesses the text (cleaning, normalization)
+   - Generates a vector embedding using the all-mpnet-base-v2 model
+   - Stores both the original text and the vector representation
+   - The embedding process is automatic and transparent to the user
+
+**Best Practices**:
+- Store logically coherent chunks of information for better retrieval results
+- Include relevant titles that summarize the document content
+- For CSV or tabular data, consider storing each row or logical section as a separate document
+- Update documents when information changes to ensure embeddings remain current","This content is about 'Key aspects of document storage:' within the section 'RAG System User Guide > RAG System User Guide > Core Functionality > Document Storage'. 1. **Document Structure**
+
+   Each document consists of:
+   - **Title**: A descriptive name for the document (required)
+   - **Content**: The main text body of the document (required)
+   - **Embedding**: Vector representation of the content (automatically generated)
+   - **Created/Updated timestamps**: Automatically managed by the system
+
+2. **Adding Documents**
+
+   To add a document to the system:
+
+   a. Using the API directly:
+
+   b. Using Python with requests:
+
+3. **Document Size Considerations**
+   - The system is optimized for text documents ranging from a few sentences to several paragraphs
+   - Very large documents (>100KB) may be automatically split into smaller chunks
+   - For optimal search results, consider splitting very large documents into logical sections
+
+4. **Embedding Generation**
+
+   When a document is stored, the system:
+   - Preprocesses the text (cleaning, normalization)
+   - Generates a vector embedding using the all-mpnet-base-v2 model
+   - Stores both the original text and the vector representation
+   - The embedding process is automatic and transparent to the user
+
+**Best Practices**:
+- Store logically coherent chunks of information for better retrieval results
+- Include relevant titles that summarize the document content
+- For CSV or tabular data, consider storing each row or logical section as a separate document
+- Update documents when information changes to ensure embeddings remain current"
+"Semantic Search","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Core Functionality<_dot_>Semantic Search","semantic-search","semantic-search","Semantic search is the core functionality of the RAG System, allowing you to find documents based on their meaning rather than just keyword matching. This capability is powered by vector embeddings and similarity metrics.","This content is about 'Semantic Search' within the section 'RAG System User Guide > RAG System User Guide > Core Functionality'. Semantic search is the core functionality of the RAG System, allowing you to find documents based on their meaning rather than just keyword matching. This capability is powered by vector embeddings and similarity metrics."
+"How Semantic Search Works:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Core Functionality<_dot_>Semantic Search<_dot_>How Semantic Search Works:","how-semantic-search-works","how-semantic-search-works","1. **Query Processing**
+   - When you submit a search query, the system converts it into a vector embedding using the same model used for document storage
+   - This query vector captures the semantic meaning of your question or search terms
+   - The system then compares this vector against all document vectors in the database
+
+2. **Similarity Calculation**
+   - The system uses cosine similarity as the primary metric to compare vectors
+   - Cosine similarity measures the angle between vectors, ranging from -1 (opposite meaning) to 1 (identical meaning)
+   - Documents with higher similarity scores are more semantically related to your query
+
+3. **Result Ranking**
+   - Results are ranked by similarity score in descending order
+   - The top_k parameter controls how many results are returned
+   - Each result includes the document content and a similarity score
+
+4. **Using Semantic Search**
+
+   To search for documents:
+
+   a. Using the API directly:
+
+   b. Using Python with requests:
+
+5. **Query Formulation Tips**
+   - Be specific: Clearly articulate what you're looking for
+   - Use natural language: The system understands conversational queries
+   - Provide context: Include relevant details for more accurate results
+   - Try variations: If you don't get desired results, try rephrasing your query
+
+6. **Understanding Results**
+   - Similarity scores above 0.8 generally indicate high relevance
+   - Scores between 0.6-0.8 indicate moderate relevance
+   - Scores below 0.6 may be tangentially related but less relevant
+   - An empty result list means no documents matched well with your query
+
+The semantic search capability allows you to find information based on conceptual understanding rather than exact keyword matches, making it powerful for retrieving relevant information even when the exact terminology differs.","This content is about 'How Semantic Search Works:' within the section 'RAG System User Guide > RAG System User Guide > Core Functionality > Semantic Search'. 1. **Query Processing**
+   - When you submit a search query, the system converts it into a vector embedding using the same model used for document storage
+   - This query vector captures the semantic meaning of your question or search terms
+   - The system then compares this vector against all document vectors in the database
+
+2. **Similarity Calculation**
+   - The system uses cosine similarity as the primary metric to compare vectors
+   - Cosine similarity measures the angle between vectors, ranging from -1 (opposite meaning) to 1 (identical meaning)
+   - Documents with higher similarity scores are more semantically related to your query
+
+3. **Result Ranking**
+   - Results are ranked by similarity score in descending order
+   - The top_k parameter controls how many results are returned
+   - Each result includes the document content and a similarity score
+
+4. **Using Semantic Search**
+
+   To search for documents:
+
+   a. Using the API directly:
+
+   b. Using Python with requests:
+
+5. **Query Formulation Tips**
+   - Be specific: Clearly articulate what you're looking for
+   - Use natural language: The system understands conversational queries
+   - Provide context: Include relevant details for more accurate results
+   - Try variations: If you don't get desired results, try rephrasing your query
+
+6. **Understanding Results**
+   - Similarity scores above 0.8 generally indicate high relevance
+   - Scores between 0.6-0.8 indicate moderate relevance
+   - Scores below 0.6 may be tangentially related but less relevant
+   - An empty result list means no documents matched well with your query
+
+The semantic search capability allows you to find information based on conceptual understanding rather than exact keyword matches, making it powerful for retrieving relevant information even when the exact terminology differs."
+"Advanced Features","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Advanced Features","advanced-features","advanced-features","","This content is about 'Advanced Features' within the section 'RAG System User Guide > RAG System User Guide'. "
+"Bulk Document Upload","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Advanced Features<_dot_>Bulk Document Upload","bulk-document-upload","bulk-document-upload","The RAG System supports bulk document upload for efficiently adding multiple documents to the database. This feature is particularly useful when migrating existing document collections or processing large datasets.","This content is about 'Bulk Document Upload' within the section 'RAG System User Guide > RAG System User Guide > Advanced Features'. The RAG System supports bulk document upload for efficiently adding multiple documents to the database. This feature is particularly useful when migrating existing document collections or processing large datasets."
+"Bulk Upload Methods:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Advanced Features<_dot_>Bulk Document Upload<_dot_>Bulk Upload Methods:","bulk-upload-methods","bulk-upload-methods","1. **Using CSV Files**
+
+   You can upload multiple documents from a CSV file with the following structure:
+
+   a. Required CSV Format:
+
+   b. Processing the CSV with Python:
+
+2. **Using the Batch API**
+
+   For very large document collections, the system provides a batch processing endpoint:
+
+   a. Batch Request Format:
+
+   b. Response Format:
+
+3. **Processing Structured Documents**
+
+   When uploading structured documents like technical manuals or textbooks:
+
+   a. Consider splitting by sections:
+   - Create a separate document for each logical section
+   - Use a consistent title format (e.g., """"Chapter 1: Introduction"""")
+   - Include context in content where needed
+
+   b. Example preprocessing script:
+
+**Best Practices for Bulk Upload**:
+- Process large uploads in batches of 100-500 documents
+- Implement error handling and retry logic for failed uploads
+- Ensure document titles are unique or include identifiers
+- Monitor database performance during large uploads
+- Consider running bulk uploads during off-peak hours
+- Validate document content before upload to ensure quality
+- Include preprocessing steps to clean and normalize text
+
+> **Note**: Very large bulk uploads may temporarily impact query performance while the vector indexes are being updated. Plan uploads accordingly.","This content is about 'Bulk Upload Methods:' within the section 'RAG System User Guide > RAG System User Guide > Advanced Features > Bulk Document Upload'. 1. **Using CSV Files**
+
+   You can upload multiple documents from a CSV file with the following structure:
+
+   a. Required CSV Format:
+
+   b. Processing the CSV with Python:
+
+2. **Using the Batch API**
+
+   For very large document collections, the system provides a batch processing endpoint:
+
+   a. Batch Request Format:
+
+   b. Response Format:
+
+3. **Processing Structured Documents**
+
+   When uploading structured documents like technical manuals or textbooks:
+
+   a. Consider splitting by sections:
+   - Create a separate document for each logical section
+   - Use a consistent title format (e.g., """"Chapter 1: Introduction"""")
+   - Include context in content where needed
+
+   b. Example preprocessing script:
+
+**Best Practices for Bulk Upload**:
+- Process large uploads in batches of 100-500 documents
+- Implement error handling and retry logic for failed uploads
+- Ensure document titles are unique or include identifiers
+- Monitor database performance during large uploads
+- Consider running bulk uploads during off-peak hours
+- Validate document content before upload to ensure quality
+- Include preprocessing steps to clean and normalize text
+
+> **Note**: Very large bulk uploads may temporarily impact query performance while the vector indexes are being updated. Plan uploads accordingly."
+"Security","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Security","security","security","","This content is about 'Security' within the section 'RAG System User Guide > RAG System User Guide'. "
+"API Authentication","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Security<_dot_>API Authentication","api-authentication","api-authentication","The RAG System implements API authentication to ensure secure access to the endpoints. This section explains how to authenticate your requests to the API.","This content is about 'API Authentication' within the section 'RAG System User Guide > RAG System User Guide > Security'. The RAG System implements API authentication to ensure secure access to the endpoints. This section explains how to authenticate your requests to the API."
+"Authentication Methods:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Security<_dot_>API Authentication<_dot_>Authentication Methods:","authentication-methods","authentication-methods","1. **API Key Authentication**
+
+   The primary authentication method uses API keys:
+
+   a. Obtaining an API Key:
+   - API keys are generated by the system administrator
+   - Each key is associated with specific permissions and rate limits
+   - Contact your administrator to request a new API key
+
+   b. Using API Keys in Requests:
+
+   c. API Key in Python Requests:
+
+2. **Environment Configuration**
+
+   For development environments, you can configure authentication:
+
+   a. In the .env file:
+
+   b. Disabling authentication (development only):
+
+   Note: This should never be done in production environments.
+
+3. **Security Best Practices**
+
+   When working with API authentication:
+
+   - Never share API keys in public repositories or client-side code
+   - Implement proper key rotation procedures
+   - Use environment variables to store API keys
+   - Set appropriate expiration for API keys
+   - Implement rate limiting to prevent abuse
+   - Monitor API usage for suspicious activity
+
+4. **Error Responses**
+
+   When authentication fails, the API returns:
+
+   Status codes:
+   - 401: Invalid or missing API key
+   - 403: Valid API key but insufficient permissions
+   - 429: Rate limit exceeded
+
+> **Note**: The authentication mechanism is designed to be secure while minimizing overhead. API keys should be treated as sensitive information and protected accordingly.","This content is about 'Authentication Methods:' within the section 'RAG System User Guide > RAG System User Guide > Security > API Authentication'. 1. **API Key Authentication**
+
+   The primary authentication method uses API keys:
+
+   a. Obtaining an API Key:
+   - API keys are generated by the system administrator
+   - Each key is associated with specific permissions and rate limits
+   - Contact your administrator to request a new API key
+
+   b. Using API Keys in Requests:
+
+   c. API Key in Python Requests:
+
+2. **Environment Configuration**
+
+   For development environments, you can configure authentication:
+
+   a. In the .env file:
+
+   b. Disabling authentication (development only):
+
+   Note: This should never be done in production environments.
+
+3. **Security Best Practices**
+
+   When working with API authentication:
+
+   - Never share API keys in public repositories or client-side code
+   - Implement proper key rotation procedures
+   - Use environment variables to store API keys
+   - Set appropriate expiration for API keys
+   - Implement rate limiting to prevent abuse
+   - Monitor API usage for suspicious activity
+
+4. **Error Responses**
+
+   When authentication fails, the API returns:
+
+   Status codes:
+   - 401: Invalid or missing API key
+   - 403: Valid API key but insufficient permissions
+   - 429: Rate limit exceeded
+
+> **Note**: The authentication mechanism is designed to be secure while minimizing overhead. API keys should be treated as sensitive information and protected accordingly."
+"Rate Limiting","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Security<_dot_>Rate Limiting","rate-limiting","rate-limiting","The RAG System implements rate limiting to prevent abuse, ensure fair usage, and maintain system performance. This section explains how rate limiting works and what to expect when limits are reached.","This content is about 'Rate Limiting' within the section 'RAG System User Guide > RAG System User Guide > Security'. The RAG System implements rate limiting to prevent abuse, ensure fair usage, and maintain system performance. This section explains how rate limiting works and what to expect when limits are reached."
+"Rate Limiting Implementation:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Security<_dot_>Rate Limiting<_dot_>Rate Limiting Implementation:","rate-limiting-implementation","rate-limiting-implementation","1. **Default Rate Limits**
+
+   The system enforces the following default limits:
+
+   - Document creation: 100 requests per hour
+   - Document retrieval: 1000 requests per hour
+   - Query operations: 500 requests per hour
+
+   These limits are applied per API key or IP address.
+
+2. **Rate Limit Headers**
+
+   The API includes rate limit information in response headers:
+
+   - X-Rate-Limit-Limit: The maximum number of requests allowed in the current period
+   - X-Rate-Limit-Remaining: The number of requests remaining in the current period
+   - X-Rate-Limit-Reset: The time at which the rate limit resets (Unix timestamp)
+
+3. **Handling Rate Limit Errors**
+
+   When a rate limit is exceeded, the API returns:
+
+   Best practices for handling rate limits:
+
+4. **Requesting Higher Limits**
+
+   If you need higher rate limits:
+
+   - Contact your system administrator with your use case
+   - Provide expected request volume and patterns
+   - Consider implementing batching for document operations to reduce request frequency
+
+5. **Best Practices**
+
+   To work effectively with rate limits:
+
+   - Implement exponential backoff for retries
+   - Use batch operations when possible
+   - Cache frequently accessed information
+   - Monitor your usage to stay within limits
+   - Distribute large operations over time
+   - Include rate limit handling in your applications
+
+> **Note**: Rate limiting is designed to ensure system stability and fair resource allocation. If you consistently hit rate limits, review your usage patterns or consider requesting adjusted limits for your use case.","This content is about 'Rate Limiting Implementation:' within the section 'RAG System User Guide > RAG System User Guide > Security > Rate Limiting'. 1. **Default Rate Limits**
+
+   The system enforces the following default limits:
+
+   - Document creation: 100 requests per hour
+   - Document retrieval: 1000 requests per hour
+   - Query operations: 500 requests per hour
+
+   These limits are applied per API key or IP address.
+
+2. **Rate Limit Headers**
+
+   The API includes rate limit information in response headers:
+
+   - X-Rate-Limit-Limit: The maximum number of requests allowed in the current period
+   - X-Rate-Limit-Remaining: The number of requests remaining in the current period
+   - X-Rate-Limit-Reset: The time at which the rate limit resets (Unix timestamp)
+
+3. **Handling Rate Limit Errors**
+
+   When a rate limit is exceeded, the API returns:
+
+   Best practices for handling rate limits:
+
+4. **Requesting Higher Limits**
+
+   If you need higher rate limits:
+
+   - Contact your system administrator with your use case
+   - Provide expected request volume and patterns
+   - Consider implementing batching for document operations to reduce request frequency
+
+5. **Best Practices**
+
+   To work effectively with rate limits:
+
+   - Implement exponential backoff for retries
+   - Use batch operations when possible
+   - Cache frequently accessed information
+   - Monitor your usage to stay within limits
+   - Distribute large operations over time
+   - Include rate limit handling in your applications
+
+> **Note**: Rate limiting is designed to ensure system stability and fair resource allocation. If you consistently hit rate limits, review your usage patterns or consider requesting adjusted limits for your use case."
+"Technical Reference","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Technical Reference","technical-reference","technical-reference","","This content is about 'Technical Reference' within the section 'RAG System User Guide > RAG System User Guide'. "
+"Embedding Models","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Technical Reference<_dot_>Embedding Models","embedding-models","embedding-models","The RAG System uses text embedding models to convert documents and queries into vector representations. Understanding these models can help you optimize your use of the system.","This content is about 'Embedding Models' within the section 'RAG System User Guide > RAG System User Guide > Technical Reference'. The RAG System uses text embedding models to convert documents and queries into vector representations. Understanding these models can help you optimize your use of the system."
+"About the Default Embedding Model:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Technical Reference<_dot_>Embedding Models<_dot_>About the Default Embedding Model:","about-the-default-embedding-model","about-the-default-embedding-model","1. **Model Information**
+   - Name: all-mpnet-base-v2
+   - Vector Dimensions: 768
+   - Model Type: Sentence Transformer
+   - Training Data: Diverse text corpus including web content, books, and research papers
+   - Optimization: Tuned for semantic similarity tasks
+
+2. **Embedding Properties**
+   - Each document is represented as a 768-dimensional floating-point vector
+   - Vectors capture semantic meaning, context, and relationships between concepts
+   - Similar concepts have vectors that are close in the vector space
+   - The model is language-aware and understands English text well
+
+3. **When Embeddings Are Generated**
+   - Document embeddings: Generated at document storage time
+   - Query embeddings: Generated when a query is processed
+   - The same model is used for both document and query embedding to ensure compatibility
+
+4. **Technical Details**
+   - Embedding storage: Vectors are stored using pgvector's native ARRAY(FLOAT) type
+   - Distance metric: Cosine similarity (1 - cosine distance) is used by default
+   - Preprocessing: Text is normalized, tokenized, and processed through the model
+
+5. **Embedding Limitations**
+   - Context window: Limited to approximately 384 tokens (roughly 250-300 words)
+   - Language support: Optimized for English, with varying performance on other languages
+   - Domain specificity: General-purpose model that may not capture highly specialized terminology
+
+6. **Advanced Usage**
+
+   If you're an advanced user integrating with the system:
+
+> **Note**: The embedding model is integrated into the system and used automatically. Most users don't need to interact with it directly. This information is provided for those who want to understand the technical underpinnings of the semantic search capability.","This content is about 'About the Default Embedding Model:' within the section 'RAG System User Guide > RAG System User Guide > Technical Reference > Embedding Models'. 1. **Model Information**
+   - Name: all-mpnet-base-v2
+   - Vector Dimensions: 768
+   - Model Type: Sentence Transformer
+   - Training Data: Diverse text corpus including web content, books, and research papers
+   - Optimization: Tuned for semantic similarity tasks
+
+2. **Embedding Properties**
+   - Each document is represented as a 768-dimensional floating-point vector
+   - Vectors capture semantic meaning, context, and relationships between concepts
+   - Similar concepts have vectors that are close in the vector space
+   - The model is language-aware and understands English text well
+
+3. **When Embeddings Are Generated**
+   - Document embeddings: Generated at document storage time
+   - Query embeddings: Generated when a query is processed
+   - The same model is used for both document and query embedding to ensure compatibility
+
+4. **Technical Details**
+   - Embedding storage: Vectors are stored using pgvector's native ARRAY(FLOAT) type
+   - Distance metric: Cosine similarity (1 - cosine distance) is used by default
+   - Preprocessing: Text is normalized, tokenized, and processed through the model
+
+5. **Embedding Limitations**
+   - Context window: Limited to approximately 384 tokens (roughly 250-300 words)
+   - Language support: Optimized for English, with varying performance on other languages
+   - Domain specificity: General-purpose model that may not capture highly specialized terminology
+
+6. **Advanced Usage**
+
+   If you're an advanced user integrating with the system:
+
+> **Note**: The embedding model is integrated into the system and used automatically. Most users don't need to interact with it directly. This information is provided for those who want to understand the technical underpinnings of the semantic search capability."
+"PGVector Configuration","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Technical Reference<_dot_>PGVector Configuration","pgvector-configuration","pgvector-configuration","The RAG System uses PostgreSQL with the pgvector extension to store and query vector embeddings. This section covers the technical details of the pgvector configuration.","This content is about 'PGVector Configuration' within the section 'RAG System User Guide > RAG System User Guide > Technical Reference'. The RAG System uses PostgreSQL with the pgvector extension to store and query vector embeddings. This section covers the technical details of the pgvector configuration."
+"PGVector Database Setup:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Technical Reference<_dot_>PGVector Configuration<_dot_>PGVector Database Setup:","pgvector-database-setup","pgvector-database-setup","1. **Extension Installation**
+
+   The pgvector extension must be installed in your PostgreSQL instance:
+
+   This is handled automatically by the setup script.
+
+2. **Vector Column**
+
+   The system uses a dedicated column in the documents table to store vector data:
+
+3. **Index Types**
+
+   PGVector supports several index types for efficient similarity search:
+
+   a. IVFFlat (default in the system):
+
+   Good for general-purpose similarity search with moderate dataset size.
+
+   b. HNSW (for better accuracy but slower indexing):
+
+   Better search quality but slower index creation.
+
+   c. Flat (for smaller datasets):
+
+   Best for small datasets (under 10,000 documents).
+
+4. **Distance Operators**
+
+   PGVector provides three distance metrics:
+   - `<->`: Cosine distance (default in the system)
+   - `<=>`: Euclidean distance
+   - `<#>`: Inner product
+
+5. **Performance Tuning**
+
+   For optimal performance:
+   - Lists parameter: Set to √n/10 where n is the number of records
+   - When using HNSW: Higher m and ef_construction values improve recall at the cost of build time and index size
+   - Use LIMIT in queries to restrict the search space
+
+6. **Example Query with PGVector**
+
+   This is how the system performs vector similarity search internally:
+
+   Where $1 is the query vector and $2 is the top_k parameter.
+
+> **Note**: These details are primarily for administrators and advanced users who want to understand or customize the vector database configuration. Regular users interact with the system through the API without needing to understand these technical details.","This content is about 'PGVector Database Setup:' within the section 'RAG System User Guide > RAG System User Guide > Technical Reference > PGVector Configuration'. 1. **Extension Installation**
+
+   The pgvector extension must be installed in your PostgreSQL instance:
+
+   This is handled automatically by the setup script.
+
+2. **Vector Column**
+
+   The system uses a dedicated column in the documents table to store vector data:
+
+3. **Index Types**
+
+   PGVector supports several index types for efficient similarity search:
+
+   a. IVFFlat (default in the system):
+
+   Good for general-purpose similarity search with moderate dataset size.
+
+   b. HNSW (for better accuracy but slower indexing):
+
+   Better search quality but slower index creation.
+
+   c. Flat (for smaller datasets):
+
+   Best for small datasets (under 10,000 documents).
+
+4. **Distance Operators**
+
+   PGVector provides three distance metrics:
+   - `<->`: Cosine distance (default in the system)
+   - `<=>`: Euclidean distance
+   - `<#>`: Inner product
+
+5. **Performance Tuning**
+
+   For optimal performance:
+   - Lists parameter: Set to √n/10 where n is the number of records
+   - When using HNSW: Higher m and ef_construction values improve recall at the cost of build time and index size
+   - Use LIMIT in queries to restrict the search space
+
+6. **Example Query with PGVector**
+
+   This is how the system performs vector similarity search internally:
+
+   Where $1 is the query vector and $2 is the top_k parameter.
+
+> **Note**: These details are primarily for administrators and advanced users who want to understand or customize the vector database configuration. Regular users interact with the system through the API without needing to understand these technical details."
+"Administration","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration","administration","administration","","This content is about 'Administration' within the section 'RAG System User Guide > RAG System User Guide'. "
+"Performance Optimization","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Performance Optimization","performance-optimization","performance-optimization","Optimizing the performance of your RAG System ensures efficient operation, faster query responses, and better resource utilization. This section provides guidance on performance tuning for different aspects of the system.","This content is about 'Performance Optimization' within the section 'RAG System User Guide > RAG System User Guide > Administration'. Optimizing the performance of your RAG System ensures efficient operation, faster query responses, and better resource utilization. This section provides guidance on performance tuning for different aspects of the system."
+"Database Optimization:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Performance Optimization<_dot_>Database Optimization:","database-optimization","database-optimization","1. **PGVector Indexing**
+
+   Properly configured indexes are critical for vector search performance:
+
+   a. Choosing the right index type:
+   - For datasets < 10,000 documents: Flat index is sufficient
+   - For datasets 10,000 - 1M documents: IVFFlat index with appropriate lists parameter
+   - For datasets > 1M documents: Consider HNSW index for better recall/performance tradeoff
+
+   b. Index tuning:
+
+   c. Optimize lists parameter:
+   The lists parameter should typically be √n/10 where n is the number of records.
+
+   Example: For 1 million records, use: √1,000,000/10 = 100 lists
+
+2. **Database Configuration**
+
+   Adjust PostgreSQL settings for vector operations:
+
+3. **Connection Pooling**
+
+   Implement connection pooling to reduce connection overhead:","This content is about 'Database Optimization:' within the section 'RAG System User Guide > RAG System User Guide > Administration > Performance Optimization'. 1. **PGVector Indexing**
+
+   Properly configured indexes are critical for vector search performance:
+
+   a. Choosing the right index type:
+   - For datasets < 10,000 documents: Flat index is sufficient
+   - For datasets 10,000 - 1M documents: IVFFlat index with appropriate lists parameter
+   - For datasets > 1M documents: Consider HNSW index for better recall/performance tradeoff
+
+   b. Index tuning:
+
+   c. Optimize lists parameter:
+   The lists parameter should typically be √n/10 where n is the number of records.
+
+   Example: For 1 million records, use: √1,000,000/10 = 100 lists
+
+2. **Database Configuration**
+
+   Adjust PostgreSQL settings for vector operations:
+
+3. **Connection Pooling**
+
+   Implement connection pooling to reduce connection overhead:"
+"API Performance:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Performance Optimization<_dot_>API Performance:","api-performance","api-performance","1. **Query Optimization**
+
+   Optimize query processing:
+
+   a. Limit results appropriately:
+   - Use reasonable top_k values (3-10 for most use cases)
+   - Implement pagination for large result sets
+
+   b. Caching frequent queries:
+
+   c. Batch processing:
+   - Use batch endpoints for multiple operations
+   - Implement bulk document upload for large collections
+
+2. **Application Configuration**
+
+   Optimize FastAPI settings:
+
+   a. Worker configuration:
+
+   b. Adjust workers based on CPU cores:
+   - General guideline: (2 × cores) + 1 workers
+   - For 4-core server: 9 workers
+   - For 8-core server: 17 workers
+
+3. **Embedding Generation**
+
+   Optimize embedding processing:
+
+   a. Batch embedding generation:
+   - Process documents in batches of 8-32 for efficient GPU utilization
+   - Implement parallel processing for CPU-based embedding generation
+
+   b. Consider hardware acceleration:
+   - GPU acceleration significantly improves embedding generation speed
+   - CPU optimization with appropriate batch sizes can help when GPU is unavailable","This content is about 'API Performance:' within the section 'RAG System User Guide > RAG System User Guide > Administration > Performance Optimization'. 1. **Query Optimization**
+
+   Optimize query processing:
+
+   a. Limit results appropriately:
+   - Use reasonable top_k values (3-10 for most use cases)
+   - Implement pagination for large result sets
+
+   b. Caching frequent queries:
+
+   c. Batch processing:
+   - Use batch endpoints for multiple operations
+   - Implement bulk document upload for large collections
+
+2. **Application Configuration**
+
+   Optimize FastAPI settings:
+
+   a. Worker configuration:
+
+   b. Adjust workers based on CPU cores:
+   - General guideline: (2 × cores) + 1 workers
+   - For 4-core server: 9 workers
+   - For 8-core server: 17 workers
+
+3. **Embedding Generation**
+
+   Optimize embedding processing:
+
+   a. Batch embedding generation:
+   - Process documents in batches of 8-32 for efficient GPU utilization
+   - Implement parallel processing for CPU-based embedding generation
+
+   b. Consider hardware acceleration:
+   - GPU acceleration significantly improves embedding generation speed
+   - CPU optimization with appropriate batch sizes can help when GPU is unavailable"
+"Monitoring and Tuning:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Performance Optimization<_dot_>Monitoring and Tuning:","monitoring-and-tuning","monitoring-and-tuning","1. **Identify Bottlenecks**
+
+   Use monitoring to identify performance issues:
+
+   a. Slow query analysis:
+
+   b. Monitor resource utilization:
+   - CPU usage during query processing
+   - Memory usage during embedding generation
+   - I/O patterns during batch operations
+
+2. **Scaling Strategies**
+
+   Implement appropriate scaling:
+
+   a. Vertical scaling:
+   - Increase memory for larger embedding models
+   - Add CPU/GPU resources for faster embedding generation
+   - Upgrade storage for larger document collections
+
+   b. Horizontal scaling:
+   - Implement read replicas for query-heavy workloads
+   - Consider sharding for very large document collections
+   - Use load balancing for API endpoints
+
+**Best Practices**:
+- Start with proper indexes before other optimizations
+- Test performance with representative data volumes
+- Implement monitoring to track performance metrics
+- Optimize the most frequent operations first
+- Balance resource usage across components
+- Consider query patterns when designing indexes
+- Review and adjust optimizations as usage patterns change
+
+> **Note**: Performance optimization should be an iterative process based on actual usage patterns and specific deployment environments.","This content is about 'Monitoring and Tuning:' within the section 'RAG System User Guide > RAG System User Guide > Administration > Performance Optimization'. 1. **Identify Bottlenecks**
+
+   Use monitoring to identify performance issues:
+
+   a. Slow query analysis:
+
+   b. Monitor resource utilization:
+   - CPU usage during query processing
+   - Memory usage during embedding generation
+   - I/O patterns during batch operations
+
+2. **Scaling Strategies**
+
+   Implement appropriate scaling:
+
+   a. Vertical scaling:
+   - Increase memory for larger embedding models
+   - Add CPU/GPU resources for faster embedding generation
+   - Upgrade storage for larger document collections
+
+   b. Horizontal scaling:
+   - Implement read replicas for query-heavy workloads
+   - Consider sharding for very large document collections
+   - Use load balancing for API endpoints
+
+**Best Practices**:
+- Start with proper indexes before other optimizations
+- Test performance with representative data volumes
+- Implement monitoring to track performance metrics
+- Optimize the most frequent operations first
+- Balance resource usage across components
+- Consider query patterns when designing indexes
+- Review and adjust optimizations as usage patterns change
+
+> **Note**: Performance optimization should be an iterative process based on actual usage patterns and specific deployment environments."
+"Troubleshooting","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Troubleshooting","troubleshooting","troubleshooting","This section provides guidance for identifying and resolving common issues you might encounter when using the RAG System.","This content is about 'Troubleshooting' within the section 'RAG System User Guide > RAG System User Guide > Administration'. This section provides guidance for identifying and resolving common issues you might encounter when using the RAG System."
+"Common Issues and Solutions:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Troubleshooting<_dot_>Common Issues and Solutions:","common-issues-and-solutions","common-issues-and-solutions","1. **API Connection Issues**
+
+   Issue: Unable to connect to the API endpoints
+
+   Troubleshooting steps:
+   - Verify the server is running: `ps aux | grep uvicorn`
+   - Check network connectivity: `curl http://localhost:8000/`
+   - Verify port availability: `netstat -tuln | grep 8000`
+   - Check for firewall blocking: `sudo ufw status`
+
+   Solutions:
+   - Restart the API server: `systemctl restart rag-api`
+   - Check application logs for errors: `tail -f /var/log/rag/application.log`
+   - Verify environment variables are correctly set in .env file
+
+2. **Database Connection Problems**
+
+   Issue: API reports database connection errors
+
+   Troubleshooting steps:
+   - Check PostgreSQL is running: `systemctl status postgresql`
+   - Verify connection settings: `psql -U raguser -h localhost -d rag`
+   - Check for connection limits: `SELECT * FROM pg_stat_activity;`
+
+   Solutions:
+   - Restart PostgreSQL: `systemctl restart postgresql`
+   - Reset connection pool: Restart the API server
+   - Check database logs: `tail -f /var/log/postgresql/postgresql-14-main.log`
+
+3. **Vector Search Not Returning Expected Results**
+
+   Issue: Query results are not relevant or no results are returned
+
+   Troubleshooting steps:
+   - Verify documents exist: `SELECT COUNT(*) FROM documents;`
+   - Check embeddings are present: `SELECT COUNT(*) FROM documents WHERE embedding IS NOT NULL;`
+   - Test direct vector comparison in database:
+
+   Solutions:
+   - Reindex vectors if corrupted:
+
+   - Try different query formulations
+   - Verify embedding model is working correctly
+
+4. **Slow Query Performance**
+
+   Issue: Vector searches take too long to complete
+
+   Troubleshooting steps:
+   - Check query execution time: 
+
+   - Verify indexes are being used: `SELECT * FROM pg_indexes WHERE tablename = 'documents';`
+   - Check for database load: `SELECT * FROM pg_stat_activity;`
+
+   Solutions:
+   - Create or optimize indexes:
+
+   - Increase work_mem for vector operations
+   - Reduce result set size with appropriate LIMIT
+   - Consider query caching for frequent searches
+
+5. **Authentication Failures**
+
+   Issue: API returns 401 Unauthorized or 403 Forbidden errors
+
+   Troubleshooting steps:
+   - Verify API key is correct and not expired
+   - Check for typos in the header name: should be `X-API-Key`
+   - Verify permissions associated with the API key
+
+   Solutions:
+   - Request a new API key if needed
+   - Check authentication logs: `grep auth /var/log/rag/application.log`
+   - Verify the authentication middleware is properly configured
+
+6. **Embedding Generation Issues**
+
+   Issue: Document uploads fail during embedding generation
+
+   Troubleshooting steps:
+   - Check embedding service status
+   - Inspect document content for problematic text
+   - Check for memory issues during embedding: `dmesg | grep -i kill`
+
+   Solutions:
+   - Restart embedding service if applicable
+   - Break large documents into smaller chunks
+   - Increase memory allocation for embedding generation
+   - Clean document text of special characters/formatting
+
+7. **System Resource Limitations**
+
+   Issue: System performance degrades under load
+
+   Troubleshooting steps:
+   - Monitor CPU usage: `top` or `htop`
+   - Check memory usage: `free -m`
+   - Monitor disk I/O: `iostat -x 1`
+
+   Solutions:
+   - Increase server resources if possible
+   - Optimize PostgreSQL configuration for available memory
+   - Implement rate limiting to prevent overload
+   - Consider horizontal scaling for high-traffic deployments","This content is about 'Common Issues and Solutions:' within the section 'RAG System User Guide > RAG System User Guide > Administration > Troubleshooting'. 1. **API Connection Issues**
+
+   Issue: Unable to connect to the API endpoints
+
+   Troubleshooting steps:
+   - Verify the server is running: `ps aux | grep uvicorn`
+   - Check network connectivity: `curl http://localhost:8000/`
+   - Verify port availability: `netstat -tuln | grep 8000`
+   - Check for firewall blocking: `sudo ufw status`
+
+   Solutions:
+   - Restart the API server: `systemctl restart rag-api`
+   - Check application logs for errors: `tail -f /var/log/rag/application.log`
+   - Verify environment variables are correctly set in .env file
+
+2. **Database Connection Problems**
+
+   Issue: API reports database connection errors
+
+   Troubleshooting steps:
+   - Check PostgreSQL is running: `systemctl status postgresql`
+   - Verify connection settings: `psql -U raguser -h localhost -d rag`
+   - Check for connection limits: `SELECT * FROM pg_stat_activity;`
+
+   Solutions:
+   - Restart PostgreSQL: `systemctl restart postgresql`
+   - Reset connection pool: Restart the API server
+   - Check database logs: `tail -f /var/log/postgresql/postgresql-14-main.log`
+
+3. **Vector Search Not Returning Expected Results**
+
+   Issue: Query results are not relevant or no results are returned
+
+   Troubleshooting steps:
+   - Verify documents exist: `SELECT COUNT(*) FROM documents;`
+   - Check embeddings are present: `SELECT COUNT(*) FROM documents WHERE embedding IS NOT NULL;`
+   - Test direct vector comparison in database:
+
+   Solutions:
+   - Reindex vectors if corrupted:
+
+   - Try different query formulations
+   - Verify embedding model is working correctly
+
+4. **Slow Query Performance**
+
+   Issue: Vector searches take too long to complete
+
+   Troubleshooting steps:
+   - Check query execution time: 
+
+   - Verify indexes are being used: `SELECT * FROM pg_indexes WHERE tablename = 'documents';`
+   - Check for database load: `SELECT * FROM pg_stat_activity;`
+
+   Solutions:
+   - Create or optimize indexes:
+
+   - Increase work_mem for vector operations
+   - Reduce result set size with appropriate LIMIT
+   - Consider query caching for frequent searches
+
+5. **Authentication Failures**
+
+   Issue: API returns 401 Unauthorized or 403 Forbidden errors
+
+   Troubleshooting steps:
+   - Verify API key is correct and not expired
+   - Check for typos in the header name: should be `X-API-Key`
+   - Verify permissions associated with the API key
+
+   Solutions:
+   - Request a new API key if needed
+   - Check authentication logs: `grep auth /var/log/rag/application.log`
+   - Verify the authentication middleware is properly configured
+
+6. **Embedding Generation Issues**
+
+   Issue: Document uploads fail during embedding generation
+
+   Troubleshooting steps:
+   - Check embedding service status
+   - Inspect document content for problematic text
+   - Check for memory issues during embedding: `dmesg | grep -i kill`
+
+   Solutions:
+   - Restart embedding service if applicable
+   - Break large documents into smaller chunks
+   - Increase memory allocation for embedding generation
+   - Clean document text of special characters/formatting
+
+7. **System Resource Limitations**
+
+   Issue: System performance degrades under load
+
+   Troubleshooting steps:
+   - Monitor CPU usage: `top` or `htop`
+   - Check memory usage: `free -m`
+   - Monitor disk I/O: `iostat -x 1`
+
+   Solutions:
+   - Increase server resources if possible
+   - Optimize PostgreSQL configuration for available memory
+   - Implement rate limiting to prevent overload
+   - Consider horizontal scaling for high-traffic deployments"
+"Diagnostic Commands:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Troubleshooting<_dot_>Diagnostic Commands:","diagnostic-commands","diagnostic-commands","1. **System Health Check**
+
+2. **Database Inspection**
+
+3. **Log Analysis**
+
+**When to Seek Support**:
+- If you encounter persistent database connection issues
+- When vector search consistently returns irrelevant results
+- If system performance degrades significantly under normal load
+- When seeing unexplained errors in application logs
+- If database indexes appear to be corrupted or ineffective
+- When authentication fails despite correct credentials
+
+> **Note**: When reporting issues to support, always include relevant logs, error messages, and steps to reproduce the problem. This information significantly accelerates troubleshooting.","This content is about 'Diagnostic Commands:' within the section 'RAG System User Guide > RAG System User Guide > Administration > Troubleshooting'. 1. **System Health Check**
+
+2. **Database Inspection**
+
+3. **Log Analysis**
+
+**When to Seek Support**:
+- If you encounter persistent database connection issues
+- When vector search consistently returns irrelevant results
+- If system performance degrades significantly under normal load
+- When seeing unexplained errors in application logs
+- If database indexes appear to be corrupted or ineffective
+- When authentication fails despite correct credentials
+
+> **Note**: When reporting issues to support, always include relevant logs, error messages, and steps to reproduce the problem. This information significantly accelerates troubleshooting."
+"Logging and Monitoring","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Logging and Monitoring","logging-and-monitoring","logging-and-monitoring","The RAG System provides comprehensive logging and monitoring capabilities to help track usage, troubleshoot issues, and optimize performance. This section covers how to access and interpret logs and monitoring data.","This content is about 'Logging and Monitoring' within the section 'RAG System User Guide > RAG System User Guide > Administration'. The RAG System provides comprehensive logging and monitoring capabilities to help track usage, troubleshoot issues, and optimize performance. This section covers how to access and interpret logs and monitoring data."
+"Logging System:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Administration<_dot_>Logging and Monitoring<_dot_>Logging System:","logging-system","logging-system","1. **Log Levels and Categories**
+
+   The system uses the following log levels:
+
+   - ERROR: Critical issues that require immediate attention
+   - WARNING: Potential issues that may need investigation
+   - INFO: General operational information
+   - DEBUG: Detailed information for troubleshooting
+
+   Log categories include:
+   - api: API endpoint access and processing
+   - db: Database operations and queries
+   - auth: Authentication and authorization events
+   - embed: Embedding generation processes
+   - search: Vector search operations
+   - system: General system information
+
+2. **Log File Locations**
+
+   Logs are stored in the following locations:
+
+   - Application logs: /var/log/rag/application.log
+   - Error logs: /var/log/rag/error.log
+   - Access logs: /var/log/rag/access.log
+
+   For containerized deployments, logs are sent to stdout/stderr.
+
+3. **Log Format**
+
+   Each log entry follows this format:
+
+   Example:
+
+   The REQUEST_ID allows tracking related operations across multiple log entries.
+
+4. **Monitoring Metrics**
+
+   Key metrics collected by the system:
+
+   a. Performance Metrics:
+   - Query response time (average, p95, p99)
+   - Embedding generation time
+   - Database operation latency
+   - API endpoint response times
+
+   b. Usage Metrics:
+   - Requests per minute by endpoint
+   - Document count by created date
+   - Query volume by hour/day
+   - Average document size
+
+   c. System Metrics:
+   - CPU and memory usage
+   - Database connection pool usage
+   - Disk space utilization
+   - Error rate by endpoint
+
+5. **Monitoring Interfaces**
+
+   The system exposes metrics through:
+
+   a. Prometheus endpoint:
+   - URL: /metrics
+   - Format: Prometheus text format
+   - Authentication: Required
+
+   b. Status endpoint:
+   - URL: /api/v1/status
+   - Format: JSON
+   - Authentication: Required
+
+   Example status response:
+
+6. **Setting Up Alerts**
+
+   Configure alerts for:
+
+   - Error rate exceeding threshold
+   - Response time degradation
+   - System resource utilization
+   - Database connection issues
+   - Authentication failures
+   - Unexpected query patterns
+
+**Best Practices**:
+- Regularly review logs for error patterns
+- Set up log rotation to manage disk space
+- Use a centralized logging system for multiple instances
+- Correlate logs across components for troubleshooting
+- Establish baseline metrics for normal operation
+- Configure appropriate alert thresholds to avoid alert fatigue
+
+> **Note**: For production deployments, consider integrating with existing logging and monitoring infrastructure such as ELK Stack, Grafana, or cloud provider monitoring services.","This content is about 'Logging System:' within the section 'RAG System User Guide > RAG System User Guide > Administration > Logging and Monitoring'. 1. **Log Levels and Categories**
+
+   The system uses the following log levels:
+
+   - ERROR: Critical issues that require immediate attention
+   - WARNING: Potential issues that may need investigation
+   - INFO: General operational information
+   - DEBUG: Detailed information for troubleshooting
+
+   Log categories include:
+   - api: API endpoint access and processing
+   - db: Database operations and queries
+   - auth: Authentication and authorization events
+   - embed: Embedding generation processes
+   - search: Vector search operations
+   - system: General system information
+
+2. **Log File Locations**
+
+   Logs are stored in the following locations:
+
+   - Application logs: /var/log/rag/application.log
+   - Error logs: /var/log/rag/error.log
+   - Access logs: /var/log/rag/access.log
+
+   For containerized deployments, logs are sent to stdout/stderr.
+
+3. **Log Format**
+
+   Each log entry follows this format:
+
+   Example:
+
+   The REQUEST_ID allows tracking related operations across multiple log entries.
+
+4. **Monitoring Metrics**
+
+   Key metrics collected by the system:
+
+   a. Performance Metrics:
+   - Query response time (average, p95, p99)
+   - Embedding generation time
+   - Database operation latency
+   - API endpoint response times
+
+   b. Usage Metrics:
+   - Requests per minute by endpoint
+   - Document count by created date
+   - Query volume by hour/day
+   - Average document size
+
+   c. System Metrics:
+   - CPU and memory usage
+   - Database connection pool usage
+   - Disk space utilization
+   - Error rate by endpoint
+
+5. **Monitoring Interfaces**
+
+   The system exposes metrics through:
+
+   a. Prometheus endpoint:
+   - URL: /metrics
+   - Format: Prometheus text format
+   - Authentication: Required
+
+   b. Status endpoint:
+   - URL: /api/v1/status
+   - Format: JSON
+   - Authentication: Required
+
+   Example status response:
+
+6. **Setting Up Alerts**
+
+   Configure alerts for:
+
+   - Error rate exceeding threshold
+   - Response time degradation
+   - System resource utilization
+   - Database connection issues
+   - Authentication failures
+   - Unexpected query patterns
+
+**Best Practices**:
+- Regularly review logs for error patterns
+- Set up log rotation to manage disk space
+- Use a centralized logging system for multiple instances
+- Correlate logs across components for troubleshooting
+- Establish baseline metrics for normal operation
+- Configure appropriate alert thresholds to avoid alert fatigue
+
+> **Note**: For production deployments, consider integrating with existing logging and monitoring infrastructure such as ELK Stack, Grafana, or cloud provider monitoring services."
+"Integration Examples","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Integration Examples","integration-examples","integration-examples","","This content is about 'Integration Examples' within the section 'RAG System User Guide > RAG System User Guide'. "
+"API Client Examples","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Integration Examples<_dot_>API Client Examples","api-client-examples","api-client-examples","This section provides examples of how to integrate with the RAG System API using different programming languages and frameworks. These examples demonstrate basic operations like document storage and semantic search.","This content is about 'API Client Examples' within the section 'RAG System User Guide > RAG System User Guide > Integration Examples'. This section provides examples of how to integrate with the RAG System API using different programming languages and frameworks. These examples demonstrate basic operations like document storage and semantic search."
+"Python Client:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Integration Examples<_dot_>API Client Examples<_dot_>Python Client:","python-client","python-client","1. **Basic API Client**
+
+2. **Async Python Client (with httpx)**","This content is about 'Python Client:' within the section 'RAG System User Guide > RAG System User Guide > Integration Examples > API Client Examples'. 1. **Basic API Client**
+
+2. **Async Python Client (with httpx)**"
+"JavaScript/Node.js Client:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Integration Examples<_dot_>API Client Examples<_dot_>JavaScript/Node.js Client:","javascriptnodejs-client","javascriptnodejs-client","1. **Node.js Client**
+
+2. **Browser JavaScript Client**","This content is about 'JavaScript/Node.js Client:' within the section 'RAG System User Guide > RAG System User Guide > Integration Examples > API Client Examples'. 1. **Node.js Client**
+
+2. **Browser JavaScript Client**"
+"Application Integration Patterns:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Integration Examples<_dot_>API Client Examples<_dot_>Application Integration Patterns:","application-integration-patterns","application-integration-patterns","1. **Web Application Integration**
+
+   For web applications, implement the following pattern:
+
+2. **Command Line Interface**
+
+   Example of a simple CLI for interacting with the RAG system:
+
+**Best Practices for Integration**:
+- Implement proper error handling and retries
+- Cache frequently accessed results when appropriate
+- Use connection pooling for backend integrations
+- Implement rate limiting protection in clients
+- Keep API keys secure and never expose them in client-side code
+- Provide user-friendly error messages
+- Consider implementing a facade/proxy API for frontend applications
+- Add observability through logging and performance monitoring
+
+> **Note**: When integrating with web applications, always keep API keys on the server side and implement a backend proxy to make requests to the RAG API to maintain security.","This content is about 'Application Integration Patterns:' within the section 'RAG System User Guide > RAG System User Guide > Integration Examples > API Client Examples'. 1. **Web Application Integration**
+
+   For web applications, implement the following pattern:
+
+2. **Command Line Interface**
+
+   Example of a simple CLI for interacting with the RAG system:
+
+**Best Practices for Integration**:
+- Implement proper error handling and retries
+- Cache frequently accessed results when appropriate
+- Use connection pooling for backend integrations
+- Implement rate limiting protection in clients
+- Keep API keys secure and never expose them in client-side code
+- Provide user-friendly error messages
+- Consider implementing a facade/proxy API for frontend applications
+- Add observability through logging and performance monitoring
+
+> **Note**: When integrating with web applications, always keep API keys on the server side and implement a backend proxy to make requests to the RAG API to maintain security."
+"Conclusion","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Conclusion","conclusion","conclusion","The RAG System provides a powerful platform for semantic document search and retrieval using vector embeddings and natural language processing. By following the guidelines in this user guide, you can effectively integrate, optimize, and maintain your RAG deployment.","This content is about 'Conclusion' within the section 'RAG System User Guide > RAG System User Guide'. The RAG System provides a powerful platform for semantic document search and retrieval using vector embeddings and natural language processing. By following the guidelines in this user guide, you can effectively integrate, optimize, and maintain your RAG deployment."
+"Key Takeaways:","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Conclusion<_dot_>Key Takeaways:","key-takeaways","key-takeaways","1. **Vector Search Capabilities**
+   - The system leverages pgvector for efficient similarity search
+   - Document content is automatically converted to vector embeddings
+   - Semantic search allows finding conceptually similar documents
+
+2. **Integration Options**
+   - RESTful API for easy integration with various platforms
+   - Client libraries available for common programming languages
+   - Batch operations for efficient processing of large document collections
+
+3. **Performance Considerations**
+   - Proper indexing is critical for search performance
+   - Database configuration should be tuned for vector operations
+   - Monitoring and logging help identify optimization opportunities
+
+4. **Security Features**
+   - API key authentication controls access
+   - Rate limiting prevents abuse
+   - Proper error handling maintains a secure environment","This content is about 'Key Takeaways:' within the section 'RAG System User Guide > RAG System User Guide > Conclusion'. 1. **Vector Search Capabilities**
+   - The system leverages pgvector for efficient similarity search
+   - Document content is automatically converted to vector embeddings
+   - Semantic search allows finding conceptually similar documents
+
+2. **Integration Options**
+   - RESTful API for easy integration with various platforms
+   - Client libraries available for common programming languages
+   - Batch operations for efficient processing of large document collections
+
+3. **Performance Considerations**
+   - Proper indexing is critical for search performance
+   - Database configuration should be tuned for vector operations
+   - Monitoring and logging help identify optimization opportunities
+
+4. **Security Features**
+   - API key authentication controls access
+   - Rate limiting prevents abuse
+   - Proper error handling maintains a secure environment"
+"Getting Further Help","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Conclusion<_dot_>Getting Further Help","getting-further-help","getting-further-help","If you encounter issues not covered in this guide or need additional assistance:
+
+1. Check the API documentation at `/docs` endpoint
+2. Review the troubleshooting section for common issues
+3. Examine logs for error details
+4. Contact system administrators for account-specific issues","This content is about 'Getting Further Help' within the section 'RAG System User Guide > RAG System User Guide > Conclusion'. If you encounter issues not covered in this guide or need additional assistance:
+
+1. Check the API documentation at `/docs` endpoint
+2. Review the troubleshooting section for common issues
+3. Examine logs for error details
+4. Contact system administrators for account-specific issues"
+"Future Development","RAG System User Guide<_dot_>RAG System User Guide<_dot_>Conclusion<_dot_>Future Development","future-development","future-development","The RAG System is continuously evolving with planned enhancements:
+
+- Support for additional embedding models
+- Enhanced filtering capabilities for search results
+- Integration with document processing pipelines
+- Advanced analytics on search patterns and document usage
+- Multi-language support for international content
+
+---
+
+Thank you for using the RAG System. We hope this guide helps you effectively leverage the power of vector search and semantic document retrieval in your applications.
+
+*Last updated: April 2025*","This content is about 'Future Development' within the section 'RAG System User Guide > RAG System User Guide > Conclusion'. The RAG System is continuously evolving with planned enhancements:
+
+- Support for additional embedding models
+- Enhanced filtering capabilities for search results
+- Integration with document processing pipelines
+- Advanced analytics on search patterns and document usage
+- Multi-language support for international content
+
+---
+
+Thank you for using the RAG System. We hope this guide helps you effectively leverage the power of vector search and semantic document retrieval in your applications.
+
+*Last updated: April 2025*"
