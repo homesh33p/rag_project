@@ -3,3 +3,5 @@
 *.pyc
 CLAUDE.md
 rag_documentation.md
+app/cache/models/*
+app/cache/tfidf_retriever.pkl

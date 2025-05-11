@@ -14,3 +14,4 @@ flake8>=6.1.0
 asyncpg==0.30.0
 langchain-community>=0.0.16
 sentence-transformers>=2.2.2
+langchain-postgres>=0.0.14

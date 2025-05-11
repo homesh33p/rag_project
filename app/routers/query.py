@@ -1,44 +1,71 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import text
+from fastapi import APIRouter
 
-from app.db.database import get_db
-from app.schemas.document import QueryRequest, DocumentResponse
+from app.documents import SimplifiedUserGuideProcessor
+from app.documents.tfidf_processor import PersistentTFIDFProcessor
 
 router = APIRouter(tags=["query"])
 
-@router.post("/query", response_model=list[DocumentResponse])
-async def query_documents(query_request: QueryRequest, db: AsyncSession = Depends(get_db)):
-    """Query documents using vector similarity search.
+@router.post("userguide/query")
+async def query_userguide(query: str, k: int = 3):
+    """Query the userguide vector store."""
     
-    This is a placeholder implementation. In a real application, you would:
-    1. Convert the query text to an embedding vector using an embedding model
-    2. Perform a similarity search using pgvector's cosine_distance or other metrics
-    3. Return the most relevant documents
-    """
-    # Placeholder for vector similarity search
-    # In a real implementation, you would use pgvector's <-> operator
+    processor = SimplifiedUserGuideProcessor.get_instance()
     
-    # This is a mock implementation that just returns documents containing the query text
-    query_text = f"%{query_request.query}%"
+    # Search
+    results = await processor.vectorstore.asimilarity_search_with_score(query, k=k)
     
-    query = """
-    SELECT id, title, content, created_at, updated_at 
-    FROM documents 
-    WHERE content ILIKE :query OR title ILIKE :query
-    LIMIT :limit
-    """
+    # Return results
+    return [
+        {
+            "content": doc.page_content,
+            "metadata": doc.metadata,
+            "score": score
+        }
+        for doc,score in results
+    ]
+
+@router.post("userguide/query/tfidf")
+async def query_with_tfidf(query: str, k: int = 3):
+    """Query the userguide using TF-IDF retrieval - fast version."""
+    # Get singleton instance (already initialized)
+    processor = PersistentTFIDFProcessor.get_instance()
     
-    result = await db.execute(
-        text(query),
-        {"query": query_text, "limit": query_request.top_k}
-    )
+    # Search - no need to rebuild the model
+    results = processor.search(query, k=k)
     
-    documents = result.mappings().all()
+    # Return results
+    return [
+        {
+            "content": doc.page_content,
+            "metadata": doc.metadata
+        }
+        for doc in results
+    ]
+
+@router.post("userguide/hybrid")
+async def hybrid_search(query: str, k: int = 5):
+    """Perform both TF-IDF and vector search, combining results - fast version."""
+    # Get TF-IDF results - using singleton instance
+    tfidf_processor = PersistentTFIDFProcessor.get_instance()
+    tfidf_results = tfidf_processor.search(query, k=k)
     
-    if not documents:
-        # Return empty list instead of 404 to maintain consistent API response
-        return []
+    # Get vector search results - already initialized
+    vector_processor = SimplifiedUserGuideProcessor.get_instance()
+    vector_results = await vector_processor.vectorstore.asimilarity_search(query, k=k)
     
-    # Convert to proper response objects
-    return [dict(doc) for doc in documents]
+    # Combine and deduplicate results
+    all_results = []
+    seen_content = set()
+    
+    # Process both result sets
+    for doc_list in [tfidf_results, vector_results]:
+        for doc in doc_list:
+            # Use content as deduplication key
+            if doc.page_content not in seen_content:
+                seen_content.add(doc.page_content)
+                all_results.append({
+                    "content": doc.page_content,
+                    "metadata": doc.metadata
+                })
+    
+    return all_results[:k]
