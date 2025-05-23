@@ -2,14 +2,17 @@ from fastapi import FastAPI
 import os
 import subprocess
 import sys
+import logging
 from .config import settings
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import documents, query
+import nltk
+from app.routers import query
 from contextlib import asynccontextmanager
 from app.db import init_db, engine, pg_engine
 from app.documents.tfidf_processor import PersistentTFIDFProcessor
 from app.documents.userguide_processor import SimplifiedUserGuideProcessor
 
+logger = logging.getLogger(__name__)
 
 def check_postgres_running():
     """Check if PostgreSQL server is running"""
@@ -26,7 +29,8 @@ def check_postgres_running():
 
 def start_postgres():
     """Start PostgreSQL server if not running"""
-    print("PostgreSQL is not running. Attempting to start...")
+    
+    logger.info("PostgreSQL is not running. Attempting to start...")
     try:
         result = subprocess.run(
             ["sudo", "-S", "service", "postgresql", "start"],
@@ -35,15 +39,14 @@ def start_postgres():
             capture_output=True
         )
         if result.returncode == 0:
-            print("PostgreSQL server started successfully")
+            logger.info("PostgreSQL server started successfully")
             return True
         else:
-            print(f"Failed to start PostgreSQL: {result.stderr}")
+            logger.error(f"Failed to start PostgreSQL: {result.stderr}")
             return False
     except Exception as e:
-        print(f"Error starting PostgreSQL: {str(e)}")
+        logger.error(f"Error starting PostgreSQL: {str(e)}")
         return False
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -55,14 +58,19 @@ async def lifespan(app: FastAPI):
     os.environ["HF_HOME"] = settings.MODEL_CACHE_DIR
 
     # Check if PostgreSQL is running and start if needed
+    
     if not check_postgres_running():
         if not start_postgres():
-            print("Could not start PostgreSQL server. Exiting...")
+            logger.critical("Could not start PostgreSQL server. Exiting...")
             sys.exit(1)
 
     # Startup: Initialize resources
     await init_db()
-
+    
+    # need to download this for use in query preprocessing
+    nltk.download("stopwords")
+    nltk.download('punkt_tab')
+    nltk.download('wordnet')
     # Initialize TF-IDF retriever
     tfidf_processor = PersistentTFIDFProcessor.get_instance()
     tfidf_processor.initialize()
@@ -72,12 +80,12 @@ async def lifespan(app: FastAPI):
     simplified_ug_processor = SimplifiedUserGuideProcessor.get_instance()
     await simplified_ug_processor.process_csv_to_vectorstore()
 
-    print("Resources initialized, application ready")
+    logger.info("Resources initialized, application ready")
 
     yield  # Application runs here
 
     # Shutdown: Clean up resources
-    print("Shutting down and cleaning up resources")
+    logger.info("Shutting down and cleaning up resources")
     
     # Clean up resources
     # Release the vector store connections
@@ -114,5 +122,5 @@ async def root():
     return {"message": "Welcome to the RAG API"}
 
 
-app.include_router(documents.router, prefix="/api/v1")
 app.include_router(query.router, prefix="/api/v1")
+# app.include_router(agents.router, prefix="/api/v1")

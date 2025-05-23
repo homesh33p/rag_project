@@ -3,7 +3,10 @@ from langchain_community.retrievers import TFIDFRetriever
 from langchain_core.documents import Document
 import pickle
 import os
+import logging
 from .csv_parser import CSVParser
+
+logger = logging.getLogger(__name__)
 
 class PersistentTFIDFProcessor(CSVParser):
     _instance = None
@@ -29,10 +32,11 @@ class PersistentTFIDFProcessor(CSVParser):
                     self.tfidf_retriever = pickle.load(f)
                 return self.tfidf_retriever
             except Exception as e:
-                print(f"Error loading TF-IDF model, rebuilding: {e}")
+                
+                logger.warning(f"Error loading TF-IDF model, rebuilding: {e}")
         
         # Build new model
-        print("Building TF-IDF retriever...")
+        logger.info("Building TF-IDF retriever...")
         documents = self._load_documents_from_csv(csv_path)
         self.tfidf_retriever = TFIDFRetriever.from_documents(documents)
         

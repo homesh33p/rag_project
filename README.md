@@ -62,6 +62,8 @@ To run a specific test:
 pytest tests/test_documents.py::test_create_document -v
 ```
 
+## [Project Documentation](./project_ref_docs/index.md)
+
 ## Additional explanation
 
 1. Data Loading:

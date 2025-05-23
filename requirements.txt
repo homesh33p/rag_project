@@ -15,3 +15,7 @@ asyncpg==0.30.0
 langchain-community>=0.0.16
 sentence-transformers>=2.2.2
 langchain-postgres>=0.0.14
+openai>=1.78.1
+azure-ai-inference==1.0.0b9
+nltk>=3.9.1
+langchain-openai>=0.3.18

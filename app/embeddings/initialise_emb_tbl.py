@@ -1,7 +1,10 @@
 from langchain_postgres import Column
 from sqlalchemy.exc import ProgrammingError
+import logging
 from app.config import settings
 from app.db import pg_engine
+
+logger = logging.getLogger(__name__)
 
 class EmbeddingsTable:
     def __init__(self) -> None:
@@ -24,4 +27,4 @@ class EmbeddingsTable:
             )
         except ProgrammingError as e:
             # Catching the exception here
-            print("Table already exists. Skipping creation.")        
+            logger.info("Table already exists. Skipping creation.")        

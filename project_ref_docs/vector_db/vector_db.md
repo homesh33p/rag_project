@@ -1,5 +1,7 @@
 ### [_Index_](../index.md)
 
+### [_Next_](../rag_agent/index.md)
+
 ### [How do vector databases operate](./vector_db_overview.md) (focus on PGVector)
 
 ### [How to design a database model for a vector store](./dbmodel_for_csv.md)
@@ -52,3 +54,7 @@ create_table("your_data.csv", "content_column", embeddings, "your_collection")
 
 These steps will read your CSV, generate embeddings for the specified content column, and
 store them in the pgvector database.
+
+### [_Index_](../index.md)
+
+### [_Next_](../rag_agent/index.md)

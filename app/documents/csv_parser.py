@@ -17,7 +17,7 @@ class CSVParser:
                 content = row.get('content') or row.get('enhancedContent')
                 if content:
                     doc = Document(
-                        id=uuid.uuid4(),
+                        id=str(uuid.uuid4()),
                         page_content=content,
                         metadata={
                             'headingTrace': row.get('headingTrace', ''),
